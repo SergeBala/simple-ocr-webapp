@@ -119,6 +119,12 @@ if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8800)
 
 
+
+
+
+
+
+
 # from fastapi import FastAPI, Depends, HTTPException, UploadFile
 # from sqlalchemy.orm import Session
 # from em_app.database import SessionLocal, engine, Base
