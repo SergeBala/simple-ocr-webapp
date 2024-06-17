@@ -104,7 +104,7 @@ async def read_employees(skip: int = 0, limit: int = 10, db: Session = Depends(g
     return employees
 
 @app.get("/employees/{employee_id}", response_model=schemas.Employee)
-async def read_employee(employee_id: int, db: Session = Depends(get_db)):
+async def read_employee(employee_id: str, db: Session = Depends(get_db)):
     db_employee = crud.get_employee(db, employee_id=employee_id)
     if db_employee is None:
         raise HTTPException(status_code=404, detail="Employee not found")

@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 from em_app import models, schemas
 
-def get_employee(db: Session, employee_id: int):
+def get_employee(db: Session, employee_id: str):
     return db.query(models.Employee).filter(models.Employee.id == employee_id).first()
 
 def get_employees(db: Session, skip: int = 0, limit: int = 10):

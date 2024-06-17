@@ -16,8 +16,6 @@ app = FastAPI()
 
 @app.post("/process-image/")
 async def process_image(file: UploadFile = File(...)):
-    # Simulate image processing and generate a numeric employee ID
-
     try:
         file_bytes = await file.read()
         employee_id  = extract_text_from_image(file_bytes)
