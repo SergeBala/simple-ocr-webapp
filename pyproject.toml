@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "em_app"
+version = "0.1.0"
+description = ""
+authors = ["Sergey Balashov <balashevski@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+fastapi = "^0.111.0"
+sqlalchemy = "^2.0.30"
+uvicorn = "^0.30.1"
+pydantic = "^2.7.4"
+httpx = "^0.27.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
