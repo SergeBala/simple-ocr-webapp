@@ -8,8 +8,6 @@ import io
 def extract_text_from_image(file_bytes: bytes) -> str:
     image = Image.open(io.BytesIO(file_bytes))
     text = pytesseract.image_to_string(image)
-    if text and text[-1] == '/n':
-        text = text[:-1]
     return text
 
 app = FastAPI()
@@ -19,7 +17,13 @@ async def process_image(file: UploadFile = File(...)):
     try:
         file_bytes = await file.read()
         employee_id  = extract_text_from_image(file_bytes)
-        print(f"Here's what service2 managed to read from the id photo:{employee_id}")
+        # print(f"Here's what service2 managed to read from the id photo:{employee_id}")
+        # print(employee_id.isdigit())
+        # print(len(employee_id) == 3)
+        # print(f"the actual length is: {len(employee_id)}")
+        # print(f"the last character is: {ord(employee_id[-1])}")
+        # if employee_id[-1] == '/n':
+        #     employee_id = employee_id[:-1]
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
     if not (employee_id.isdigit() and len(employee_id) == 3):

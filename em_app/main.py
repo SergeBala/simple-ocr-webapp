@@ -70,20 +70,26 @@ async def read_employees(skip: int = 0, limit: int = 10, db: Session = Depends(g
     employees = crud.get_employees(db, skip=skip, limit=limit)
     return employees
 
-# @app.get("/employees/{employee_id}", response_model=schemas.Employee)
-# async def read_employee(employee_id: str, db: Session = Depends(get_db)):
-#     print(f"searching for employee_id:{employee_id}")
-#     db_employee = crud.get_employee(db, employee_id=employee_id)
-#     if db_employee is None:
-#         raise HTTPException(status_code=404, detail="Employee not found")
-#     return db_employee
-
 @app.get("/employees/{employee_id}", response_model=schemas.Employee)
 async def read_employee(employee_id: str, db: Session = Depends(get_db)):
     db_employee = crud.get_employee(db, employee_id=employee_id)
     if db_employee is None:
         raise HTTPException(status_code=404, detail="Employee not found")
     return db_employee
+
+@app.delete("/employees/{employee_id}")
+async def delete_employee(employee_id: str, db: Session = Depends(get_db)):
+    result = crud.delete_employee(db, employee_id)
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    return result
+
+@app.patch("/employees/{employee_id}", response_model=schemas.Employee)
+async def update_employee(employee_id: str, updates: dict, db: Session = Depends(get_db)):
+    result = crud.update_employee(db, employee_id, updates)
+    if "error" in result:
+        raise HTTPException(status_code=400, detail=result["error"])
+    return result
 
 @app.get("/")
 async def read_root():
@@ -92,11 +98,3 @@ async def read_root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8800)
-
-
-
-
-
-
-
-
